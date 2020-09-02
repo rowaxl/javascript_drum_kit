@@ -57,8 +57,31 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
-<script>
+  <p><a href="https://unsplash.com/photos/6NpYOFB3VCI">Photo by David Martin, Unsplash</a></p>
 
+<script>
+const playSound = event => {
+  const keyCode = event.key.toUpperCase().charCodeAt(0);
+  const button = document.querySelector(`div[data-key="${keyCode}"]`);
+  const audio = document.querySelector(`audio[data-key="${keyCode}"]`);
+
+  if (!audio) return;
+
+  button.classList.add('playing');
+
+  audio.currentTime = 0;
+  audio.play();
+}
+
+const removeTransition = event => {
+  if (event.propertyName !== 'transform') return;
+  event.target.classList.remove('playing');
+}
+
+const keys = document.querySelectorAll('.key');
+keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+window.addEventListener('keydown', playSound);
 </script>
 
 
